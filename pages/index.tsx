@@ -12,7 +12,8 @@ const Page: NextPage = () => {
 };
 
 const onClick = () => {
-  fetch('/api/add_memo', {
+  const apiPath = '/api/add_memo';
+  fetch(apiPath, {
     body: JSON.stringify({
       date: formatDate(new Date()),
       title: 'onClickテスト',
