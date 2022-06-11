@@ -3,6 +3,7 @@ import { RootFormValues } from 'types/RootFormValues';
 import { Minite } from 'types/Minite';
 import { Second } from 'types/Second';
 import { useCountDown } from 'hooks/useCountDown';
+import { asyncCreateNotionPage } from 'utils/asyncCreateNotionPage';
 import { formatDate } from 'utils/formatDate';
 
 export const useRootForm = (
@@ -30,19 +31,10 @@ export const useRootForm = (
 
   useEffect(() => {
     if (!isCounting && minite === 0 && second === 0) {
-      const apiPath = '/api/add_memo';
       const date = formatDate(new Date());
       const title = `${isSetMinite}分${isSetSecond}秒勉強した`;
-      const body = JSON.stringify({
-        date,
-        title,
-      });
-      const method = 'POST';
 
-      fetch(apiPath, {
-        body,
-        method,
-      });
+      asyncCreateNotionPage(date, title);
     }
   }, [isCounting, minite, second, isSetMinite, isSetSecond]);
 
