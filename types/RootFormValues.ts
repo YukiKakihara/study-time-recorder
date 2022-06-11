@@ -1,4 +1,7 @@
+import { Minite } from 'types/Minite';
+import { Second } from 'types/Second';
+
 export type RootFormValues = {
-  minite: number;
-  second: number;
+  minite: Minite;
+  second: Second;
 };

@@ -99,7 +99,7 @@ const inputStyle = {
 };
 
 export const Root: React.FC<BoxProps> = (boxProps) => {
-  const initialValues: RootFormValues = { minite: 0, second: 0 };
+  const initialValues: RootFormValues = { minite: 20, second: 0 };
   const {
     handleMiniteChange,
     handleSecondChange,

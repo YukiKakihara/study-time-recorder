@@ -1,5 +1,7 @@
-import React from 'react';
 import { RootFormValues } from 'types/RootFormValues';
+import { Minite } from 'types/Minite';
+import { Second } from 'types/Second';
+import { useCountDown } from 'hooks/useCountDown';
 
 export const useRootForm = (
   initialValues: RootFormValues
@@ -13,36 +15,36 @@ export const useRootForm = (
   minite: RootFormValues['minite'];
   second: RootFormValues['second'];
 } => {
-  const [values, setValues] = React.useState<RootFormValues>(initialValues);
-  const [isCounting, setIsCounting] = React.useState<boolean>(false);
-
-  const { minite, second } = values;
+  const {
+    countStart,
+    countStop,
+    isCounting,
+    minite,
+    second,
+    setMinite,
+    setSecond,
+  } = useCountDown(initialValues.minite, initialValues.second);
   const isStartButtonDisabled = isCounting;
   const isStopButtonDisabled = !isCounting;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    keyOfRootFormValues: keyof RootFormValues
-  ): void => {
-    setValues({ ...values, [keyOfRootFormValues]: Number(e.target.value) });
-  };
   const handleMiniteChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    handleChange(e, 'minite');
+    setMinite(Number(e.target.value) as Minite);
   };
+
   const handleSecondChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    handleChange(e, 'second');
+    setSecond(Number(e.target.value) as Second);
   };
 
   const handleStartButtonClick = (
     _e?: React.MouseEvent<HTMLButtonElement>
   ): void => {
-    setIsCounting(true);
+    countStart();
   };
 
   const handleStopButtonClick = (
     _e?: React.MouseEvent<HTMLButtonElement>
   ): void => {
-    setIsCounting(false);
+    countStop();
   };
 
   return {
