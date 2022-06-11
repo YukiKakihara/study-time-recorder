@@ -17,6 +17,7 @@
     "baseUrl": "./",
     "paths": {
       "hooks/*": ["hooks/*"],
+      "molecules/*": ["components/molecules/*"],
       "organisms/*": ["components/organisms/*"],
       "templates/*": ["components/templates/*"],
       "types/*": ["types/*"],

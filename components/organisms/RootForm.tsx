@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  HStack,
-  Input,
-} from '@chakra-ui/react';
+import { FormControl, FormLabel, HStack, Input } from '@chakra-ui/react';
 import { RootFormValues } from 'types/RootFormValues';
+import { NumberField } from 'molecules/NumberField';
+import { PrimaryButton } from 'molecules/PrimaryButton';
+import { SecondaryButton } from 'molecules/SecondaryButton';
 
 type Props = {
   handleMiniteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,59 +29,35 @@ const Component: React.FC<Props> = ({
   return (
     <FormControl>
       <HStack justifyContent="center" mb={8} spacing={8}>
-        <HStack>
-          <Input
-            id="minite"
-            onChange={handleMiniteChange}
-            sx={inputStyle}
-            type="number"
-            value={minite}
-          />
-          <FormLabel htmlFor="minite" sx={labelStyle}>
-            分
-          </FormLabel>
-        </HStack>
-        <HStack>
-          <Input
-            id="second"
-            onChange={handleSecondChange}
-            sx={inputStyle}
-            type="number"
-            value={second}
-          />
-          <FormLabel htmlFor="second" sx={labelStyle}>
-            秒
-          </FormLabel>
-        </HStack>
+        <NumberField
+          id="minite"
+          onChange={handleMiniteChange}
+          label="分"
+          value={minite}
+        />
+        <NumberField
+          id="second"
+          onChange={handleSecondChange}
+          label="秒"
+          value={second}
+        />
       </HStack>
       <HStack justifyContent="center" spacing={8}>
-        <Button
-          colorScheme="blue"
+        <PrimaryButton
           isDisabled={isStartButtonDisabled}
           onClick={handleStartButtonClick}
-          variant="solid"
         >
           スタート
-        </Button>
-        <Button
-          colorScheme="blue"
+        </PrimaryButton>
+        <SecondaryButton
           isDisabled={isStopButtonDisabled}
           onClick={handleStopButtonClick}
-          variant="outline"
         >
           一時停止
-        </Button>
+        </SecondaryButton>
       </HStack>
     </FormControl>
   );
-};
-
-const labelStyle = {
-  padding: '8px 0',
-};
-
-const inputStyle = {
-  width: 200,
 };
 
 export const RootForm: React.FC<Props> = (props) => {
