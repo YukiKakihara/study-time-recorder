@@ -16,7 +16,9 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
+      "hooks/*": ["hooks/*"],
       "templates/*": ["components/templates/*"],
+      "types/*": ["types/*"],
       "utils/*": ["utils/*"]
     }
   },

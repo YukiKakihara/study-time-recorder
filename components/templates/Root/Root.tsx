@@ -8,27 +8,23 @@ import {
   HStack,
   Input,
 } from '@chakra-ui/react';
-
-type Values = {
-  minite: number;
-  second: number;
-};
+import { RootFormValues } from 'types/RootFormValues';
+import { useRootForm } from 'hooks/useRootForm';
 
 type ComponentProps = {
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    valueKey: keyof Values
-  ) => void;
-  values: Values;
+  handleMiniteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSecondChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  minite: RootFormValues['minite'];
+  second: RootFormValues['second'];
 } & BoxProps;
 
 const Component: React.FC<ComponentProps> = ({
-  handleChange,
-  values,
+  handleMiniteChange,
+  handleSecondChange,
+  minite,
+  second,
   ...boxProps
 }) => {
-  const { minite, second } = values;
-
   return (
     <Box {...boxProps}>
       <Heading as="h1" mb={16} size="xl" textAlign="center">
@@ -40,9 +36,7 @@ const Component: React.FC<ComponentProps> = ({
           <HStack>
             <Input
               id="minite"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e, 'minite')
-              }
+              onChange={handleMiniteChange}
               sx={inputStyle}
               type="number"
               value={minite}
@@ -54,9 +48,7 @@ const Component: React.FC<ComponentProps> = ({
           <HStack>
             <Input
               id="second"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e, 'second')
-              }
+              onChange={handleSecondChange}
               sx={inputStyle}
               type="number"
               value={second}
@@ -82,16 +74,17 @@ const inputStyle = {
 };
 
 export const Root: React.FC<BoxProps> = (boxProps) => {
-  const initialValues: Values = { minite: 0, second: 0 };
-  const [values, setValues] = React.useState<Values>(initialValues);
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    valueKey: keyof Values
-  ): void => {
-    setValues({ ...values, [valueKey]: Number(e.target.value) });
-  };
+  const initialValues: RootFormValues = { minite: 0, second: 0 };
+  const { handleMiniteChange, handleSecondChange, minite, second } =
+    useRootForm(initialValues);
 
   return (
-    <Component handleChange={handleChange} values={values} {...boxProps} />
+    <Component
+      handleMiniteChange={handleMiniteChange}
+      handleSecondChange={handleSecondChange}
+      minite={minite}
+      second={second}
+      {...boxProps}
+    />
   );
 };
