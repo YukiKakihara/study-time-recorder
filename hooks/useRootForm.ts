@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { RootFormValues } from 'types/RootFormValues';
 import { Minite } from 'types/Minite';
 import { Second } from 'types/Second';
 import { useCountDown } from 'hooks/useCountDown';
+import { formatDate } from 'utils/formatDate';
 
 export const useRootForm = (
   initialValues: RootFormValues
@@ -15,6 +17,7 @@ export const useRootForm = (
   minite: RootFormValues['minite'];
   second: RootFormValues['second'];
 } => {
+  const { minite: isSetMinite, second: isSetSecond } = initialValues;
   const {
     countStart,
     countStop,
@@ -23,7 +26,26 @@ export const useRootForm = (
     second,
     setMinite,
     setSecond,
-  } = useCountDown(initialValues.minite, initialValues.second);
+  } = useCountDown(isSetMinite, isSetSecond);
+
+  useEffect(() => {
+    if (!isCounting && minite === 0 && second === 0) {
+      const apiPath = '/api/add_memo';
+      const date = formatDate(new Date());
+      const title = `${isSetMinite}分${isSetSecond}秒勉強した`;
+      const body = JSON.stringify({
+        date,
+        title,
+      });
+      const method = 'POST';
+
+      fetch(apiPath, {
+        body,
+        method,
+      });
+    }
+  }, [isCounting, minite, second, isSetMinite, isSetSecond]);
+
   const isStartButtonDisabled = isCounting;
   const isStopButtonDisabled = !isCounting;
 

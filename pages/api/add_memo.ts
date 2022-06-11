@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from '@notionhq/client';
 import { CreatePageResponse } from '@notionhq/client/build/src/api-endpoints';
 
-export type RequestBody = {
+type RequestBody = {
   date: string;
   title: string;
 };

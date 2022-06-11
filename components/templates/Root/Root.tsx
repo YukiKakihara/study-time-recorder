@@ -40,7 +40,6 @@ const Component: React.FC<ComponentProps> = ({
         StudyTimeRecorder
       </Heading>
       <FormControl>
-        {/* <div>○分勉強したことを記録しました</div> */}
         <HStack justifyContent="center" mb={8} spacing={8}>
           <HStack>
             <Input
