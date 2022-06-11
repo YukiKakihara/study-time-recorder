@@ -6,11 +6,19 @@ export const useRootForm = (
 ): {
   handleMiniteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSecondChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleStartButtonClick: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  handleStopButtonClick: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  isStartButtonDisabled: boolean;
+  isStopButtonDisabled: boolean;
   minite: RootFormValues['minite'];
   second: RootFormValues['second'];
 } => {
   const [values, setValues] = React.useState<RootFormValues>(initialValues);
+  const [isCounting, setIsCounting] = React.useState<boolean>(false);
+
   const { minite, second } = values;
+  const isStartButtonDisabled = isCounting;
+  const isStopButtonDisabled = !isCounting;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -25,5 +33,26 @@ export const useRootForm = (
     handleChange(e, 'second');
   };
 
-  return { handleMiniteChange, handleSecondChange, minite, second };
+  const handleStartButtonClick = (
+    _e?: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    setIsCounting(true);
+  };
+
+  const handleStopButtonClick = (
+    _e?: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    setIsCounting(false);
+  };
+
+  return {
+    handleMiniteChange,
+    handleSecondChange,
+    handleStartButtonClick,
+    handleStopButtonClick,
+    isStartButtonDisabled,
+    isStopButtonDisabled,
+    minite,
+    second,
+  };
 };
